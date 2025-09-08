@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ship HUD — Left Panel</title>
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="./panel.css" />
+  <script type="module">
+    import { applyTheme } from '../shared/theme.js'; // runtime colors/fonts
+    applyTheme().catch(()=>{}); /* no top-level await to keep linters happy */
+  </script>
+</head>
+<body class="hud-left">
+  <header class="tabs">
+    <button class="tab active" data-tab="nav">NAVIGATION</button>
+    <button class="tab" data-tab="txn">TRANSACTIONS</button>
+    <button class="tab" data-tab="contacts">CONTACTS</button>
+    <button class="tab" data-tab="target">TARGET</button>
+  </header>
+
+  <!-- NAVIGATION -->
+  <section class="pane show" id="tab-nav">
+    <div class="kv grid">
+      <div><label>LOCATION</label><span id="loc">—</span></div>
+      <div><label>NEXT JUMP</label><span id="next">—</span></div>
+      <div><label>JUMPS</label><span id="jumps">—</span></div>
+      <div><label>DESTINATION</label><span id="dest">—</span></div>
+    </div>
+    <div class="list head">
+      <div>LOCATION</div><div>STAR</div>
+    </div>
+    <div class="list body" id="nav-list"><div class="row dim"><div>—</div><div class="muted">No plotted route</div></div></div>
+  </section>
+
+  <!-- TRANSACTIONS -->
+  <section class="pane" id="tab-txn">
+    <div class="list head"><div>TYPE</div><div>DETAILS</div></div>
+    <div class="list body" id="txn-list"><div class="row dim"><div>—</div><div class="muted">No activity</div></div></div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section class="pane" id="tab-contacts">
+    <div class="list head"><div>CONTACT</div><div>INFO</div></div>
+    <div class="list body" id="contacts-list"><div class="row dim"><div>—</div><div class="muted">No contacts</div></div></div>
+  </section>
+
+  <!-- TARGET (sub-targets / manifest) -->
+  <section class="pane" id="tab-target">
+    <header class="subtabs">
+      <button class="subtab active" data-sub="subs">SUB-TARGETS</button>
+      <button class="subtab" data-sub="manifest">MANIFEST</button>
+    </header>
+    <div class="subpane show" id="sub-subs">
+      <div class="list head"><div>SUBSYSTEM</div><div>HEALTH</div></div>
+      <div class="list body" id="subs-list"><div class="row dim"><div>—</div><div class="muted">No lock</div></div></div>
+    </div>
+    <div class="subpane" id="sub-manifest">
+      <div class="list head"><div>CARGO</div><div>QTY</div></div>
+      <div class="list body" id="manifest-list"><div class="row dim"><div>—</div><div class="muted">Unknown</div></div></div>
+    </div>
+  </section>
+
+  <script type="module" src="./panel.js"></script>
+</body>
+</html>

@@ -1,13 +1,11 @@
-/* Spaceship HUD theme with CSS variables */
 :root{
   --bg:#0a0a0f; --panel:#111119; --panel-border:#26263a;
   --text:#e8e8f0; --muted:#9aa; --accent:#B01515;
-  --font:Segoe UI, Roboto, Orbitron, Arial, Helvetica, sans-serif;
+  --font:Orbitron, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
   --hfont:Russo One, Orbitron, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
   --scanlines:0.06; --glow:0.5;
 }
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--font);height:100%}
-/* subtle scanline overlay */
 body::before{
   content:''; position:fixed; inset:0; pointer-events:none;
   background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.05), rgba(255,255,255,0.05) 1px, transparent 1px, transparent 3px);
@@ -27,5 +25,25 @@ h1,h2{font-family:var(--hfont);font-weight:600;margin:0 0 6px; letter-spacing:0.
 .badge{border:1px solid var(--panel-border);background:#181825;border-radius:999px;padding:4px 10px}
 .accent{color:var(--accent)}
 .hr{height:1px;background:linear-gradient(90deg, transparent, var(--panel-border), transparent); margin:12px 0}
-/* simple reticle-ish divider */
 .reticle{height:10px; background: linear-gradient(90deg, transparent 0, var(--accent) 10%, transparent 20%, transparent 80%, var(--accent) 90%, transparent 100%); opacity:0.3}
+
+/* HUD chrome */
+.hud-bar { display:flex; justify-content:space-between; align-items:center;
+  padding:6px 10px; margin:8px 16px 0 16px; border:1px solid var(--panel-border);
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.2)), var(--panel);
+  font-family:var(--hfont); letter-spacing:.08em; text-transform:uppercase;
+}
+.hud-bar .tag { padding:2px 8px; border:1px solid var(--panel-border); border-radius:999px; }
+.hud-center { display:grid; grid-template-columns: 1fr 1.2fr 1fr; gap:12px; padding:8px 16px; }
+.hud-pane { border:1px solid var(--panel-border); background:var(--panel); border-radius:10px; padding:12px; min-height:160px; }
+.hud-pane h3 { font-family:var(--hfont); margin:0 0 8px; font-size:14px; color:var(--muted); text-transform:uppercase; }
+.hud-reticle { height:140px; border:1px dashed var(--panel-border); border-radius:8px;
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in oklab, var(--accent) 40%, transparent) 0, transparent 35%),
+    repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 0 1px, transparent 1px 2px);
+  display:flex; align-items:center; justify-content:center; color:var(--muted);
+}
+.mode-pip { color: var(--accent); }
+.btn { background:transparent; color:var(--text); border:1px solid var(--panel-border); padding:6px 10px; border-radius:8px; cursor:pointer }
+.btn:hover { border-color: var(--accent) }
+.small{font-size:12px;color:var(--muted)}

@@ -1,0 +1,93 @@
+/* Uses theme variables from theme.css and adapts to ED styling */
+.hud-true { height:100vh; overflow:hidden; position:relative; }
+
+/* Top bars */
+.hud-top{ position:absolute; left:0; right:0; top:6px; height:22px; pointer-events:none; }
+.hud-top .comms{ position:absolute; left:22px; top:0; color:var(--muted); font-family:var(--hfont); }
+.hud-top .info{ position:absolute; right:22px; top:0; color:var(--muted); font-family:var(--hfont); text-align:right; }
+
+/* Mode brackets */
+.brackets{ position:absolute; top:30px; bottom:30px; width:140px; opacity:.9; }
+.brackets.left{ left:6px; }
+.brackets.right{ right:6px; }
+.brackets::before, .brackets::after{
+  content:''; position:absolute; left:0; right:0; height:28px; border:2px solid var(--accent);
+  border-left:none; border-right:none; opacity:.85;
+}
+.brackets.left::before{ top:0; border-top-left-radius:28px; border-top-right-radius:28px; }
+.brackets.left::after{ bottom:0; border-bottom-left-radius:28px; border-bottom-right-radius:28px; }
+.brackets.right::before{ top:0; border-top-left-radius:28px; border-top-right-radius:28px; }
+.brackets.right::after{ bottom:0; border-bottom-left-radius:28px; border-bottom-right-radius:28px; }
+/* Analysis mode switches to straight brackets */
+body[data-mode="analysis"] .brackets::before,
+body[data-mode="analysis"] .brackets::after{ border-radius:0; }
+
+/* Left/Right panels */
+.panel{ position:absolute; top:68px; bottom:68px; width:32vw; max-width:520px; display:flex; flex-direction:column;
+  border:1px solid var(--panel-border); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.2)), var(--panel);
+  box-shadow:0 0 18px rgba(255,125,0,.12) inset; padding:10px; }
+.panel.left{ left:20px; transform:perspective(900px) rotateY(8deg); }
+.panel.right{ right:20px; transform:perspective(900px) rotateY(-8deg); }
+.tabs{ display:flex; gap:8px; padding:6px 6px 8px 6px; }
+.tab{ font-family:var(--hfont); font-size:12px; padding:4px 10px; border:1px solid var(--panel-border); background:#181825; }
+.tab.active{ color:var(--text); border-color:var(--accent); box-shadow:0 0 8px color-mix(in oklab, var(--accent) 35%, transparent); }
+.panel-body{ flex:1; border-top:1px solid var(--panel-border); padding:8px; overflow:hidden; display:flex; flex-direction:column; gap:8px; }
+.panel-body.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.panel-footer{ border-top:1px solid var(--panel-border); padding-top:8px; display:flex; gap:8px; }
+.list{ flex:1; overflow:auto; border:1px solid var(--panel-border); }
+.row{ display:grid; grid-template-columns:auto 1fr auto; gap:8px; padding:4px 8px; border-bottom:1px dashed var(--panel-border); align-items:center; }
+.row.sel{ background:linear-gradient(90deg, color-mix(in oklab, var(--accent) 18%, transparent), transparent); }
+.bullet{ width:9px; height:9px; border:2px solid var(--accent); border-radius:50%; display:inline-block }
+.dist{ color:var(--muted); font-size:12px }
+
+/* Center cluster */
+.center{ position:absolute; left:20vw; right:20vw; top:64px; bottom:64px; display:grid;
+  grid-template-columns: 1fr minmax(420px, 560px) 320px; gap:18px; align-items:center; }
+.target-block{ align-self:start; }
+.kv{display:flex; flex-direction:column}
+.kv.tight label{ font-size:11px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase }
+.kv.tight span{ font-size:18px }
+
+/* Scanner */
+.scanner{ position:relative; height:320px; }
+.rings{ position:absolute; inset:0; margin:auto; width:320px; height:320px; }
+.ring{ position:absolute; border:1px solid var(--panel-border); border-radius:50% }
+.r1{ inset:0; } .r2{ inset:24px; } .r3{ inset:54px; }
+.ticks{ position:absolute; inset:0; background:
+  conic-gradient(from 0deg, var(--panel-border) 0 1deg, transparent 1deg 30deg); mask: radial-gradient(farthest-side, transparent calc(50% - 1px), #000 calc(50% - 0px)); opacity:.6 }
+.sweep{ position:absolute; inset:0; border-radius:50%; background:
+  conic-gradient(from 0deg, color-mix(in oklab, var(--accent) 30%, transparent), transparent 60%);
+  animation: sweep 3.6s linear infinite; mix-blend-mode:screen; opacity:.5 }
+@keyframes sweep { to { transform: rotate(360deg);} }
+
+/* Heat & Speed gauges (semicircular) */
+.gauge{ position:absolute; top:50%; transform:translateY(-50%); width:240px; height:240px; }
+.gauge .arc{ position:absolute; inset:0; border-radius:50%; mask: radial-gradient(farthest-side, transparent 54%, #000 55%); overflow:hidden; }
+.gauge .fill{ position:absolute; inset:0; background:
+  conic-gradient(from -90deg, var(--accent) var(--val,0%), transparent var(--val,0%)); }
+.gauge.heat{ left:calc(50% - 420px); }
+.gauge.speed{ right:calc(50% - 420px); }
+.gauge .readout{ position:absolute; bottom:-10px; width:100%; text-align:center; font-family:var(--hfont) }
+.blue-zone{ background:
+  conic-gradient(from -90deg, rgba(52,160,255,.6) var(--blue,0%), transparent var(--blue,0%)); }
+.throttle{ position:absolute; inset:0; background:
+  conic-gradient(from -90deg, #fff 0deg, #fff 2deg, transparent 2deg 360deg); opacity:.8; transform:rotate(var(--thr,0deg)); mask: radial-gradient(farthest-side, transparent 54%, #000 55%) }
+
+/* Right block: pips, signature, fuel */
+.right-block{ align-self:stretch; display:flex; flex-direction:column; gap:14px }
+.pips .row{ grid-template-columns: 40px 1fr; border:0; padding:0; }
+.pips label{ font-family:var(--hfont); color:var(--muted); }
+.pips .bar{ height:14px; border:1px solid var(--panel-border); position:relative; }
+.pips .bar::before{
+  content:''; position:absolute; left:0; top:0; bottom:0; width:var(--p,0%);
+  background:linear-gradient(90deg, color-mix(in oklab, var(--accent) 60%, transparent), transparent);
+}
+.signature label,.fuel label{ font-family:var(--hfont); color:var(--muted); font-size:12px; letter-spacing:.12em; text-transform:uppercase }
+.wave{ height:36px; border:1px solid var(--panel-border); position:relative; overflow:hidden }
+.trace{ position:absolute; inset:0; background:
+  repeating-linear-gradient(90deg, transparent 0 8px, color-mix(in oklab, var(--accent) 40%, transparent) 8px 9px);
+  opacity:.4; animation: sig 2.8s linear infinite }
+@keyframes sig { to { transform: translateX(-100%);} }
+.fuel .stack{ display:flex; gap:4px }
+.fuel .seg{ width:16px; height:30px; border:1px solid var(--panel-border); background:rgba(255,125,0,.12) }
+.rate{ font-family:var(--hfont); margin-top:4px }

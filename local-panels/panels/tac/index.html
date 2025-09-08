@@ -26,13 +26,12 @@
     </div>
     <div class="reticle"></div>
     <div class="row">
-      <button id="combatBtn">⚡ Engage Protocol</button>
+      <button class="btn" id="combatBtn">⚡ Engage Protocol</button>
     </div>
   </div>
 
   <script type="module">
     import { ws } from '../shared/ws.js';
-
     const tName = document.getElementById('tName');
     const tShip = document.getElementById('tShip');
     const tStatus = document.getElementById('tStatus');
@@ -55,11 +54,10 @@
       tSub.textContent = x.subsystem || '—';
     });
 
-    // Macro trigger
     btn.addEventListener('click', async () => {
       try {
         const res = await fetch('/macro/combat_entry', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({}) });
-        if (res.ok) btn.textContent = '✅ Protocol Sent'; else btn.textContent = '❌ Error';
+        btn.textContent = res.ok ? '✅ Protocol Sent' : '❌ Error';
         setTimeout(()=> btn.textContent = '⚡ Engage Protocol', 1200);
       } catch { btn.textContent = '❌ Error'; setTimeout(()=> btn.textContent='⚡ Engage Protocol', 1200); }
     });

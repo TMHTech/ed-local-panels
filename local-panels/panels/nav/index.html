@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ED Panel — Navigation</title>
   <link rel="stylesheet" href="../shared/theme.css">
+  <script type="module">
+    import { applyTheme } from '../shared/theme.js';
+    await applyTheme();
+  </script>
 </head>
 <body>
   <div class="card">
@@ -17,10 +21,18 @@
     <div class="row">
       <div class="kv"><label>Status</label><span id="status">—</span></div>
     </div>
+    <div class="row">
+      <button class="btn" id="dockBtn">Dock Macro</button>
+      <span class="small">Mode: <span id="modeTag">—</span></span>
+    </div>
   </div>
 
   <script type="module">
     import { ws } from '../shared/ws.js';
+    const r = await fetch('/theme'); const t= await r.json(); document.getElementById('modeTag').textContent = (t.mode==='analysis'?'Analysis':'Combat');
+    const dockBtn = document.getElementById('dockBtn');
+    dockBtn.addEventListener('click', ()=> fetch('/macro/dock',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}).then(x=>{dockBtn.textContent=x.ok?'✅ Sent':'❌ Error'; setTimeout(()=>dockBtn.textContent='Dock Macro',1200)}));
+
     const sys = document.getElementById('sys');
     const star = document.getElementById('star');
     const fuel = document.getElementById('fuel');

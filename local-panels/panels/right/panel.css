@@ -1,0 +1,28 @@
+/* Right panel styling mirrors left – shared look */
+.hud-right{ padding:10px; background:var(--bg); color:var(--text) }
+.tabs{ display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap }
+.tab{ font-family:var(--hfont); font-size:12px; padding:6px 10px; border:1px solid var(--panel-border); background:#181825; cursor:pointer }
+.tab.active{ border-color:var(--accent); box-shadow:0 0 8px color-mix(in oklab,var(--accent) 35%,transparent) }
+
+.pane{ display:none; border:1px solid var(--panel-border); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.2)), var(--panel); padding:10px; border-radius:10px }
+.pane.show{ display:block }
+
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px }
+.kv label{ font-size:11px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase }
+.kv span{ font-size:18px }
+.muted{ color:var(--muted); font-size:12px }
+
+.list{ display:grid; grid-template-columns: 1fr 120px 90px 100px; border-left:1px solid var(--panel-border); border-right:1px solid var(--panel-border) }
+#fg-list.list, #cargo-list.list{ grid-template-columns: 1fr 1fr 1fr }
+.list.head{ background:#181825; color:var(--muted); border-top:1px solid var(--panel-border); padding:6px 8px }
+.list.body{ max-height:56vh; overflow:auto; border-bottom:1px solid var(--panel-border) }
+.row{ display:contents }
+.row > div{ padding:6px 8px; border-bottom:1px dashed var(--panel-border) }
+.row.dim > div{ color:var(--muted) }
+
+.toggles{ display:grid; grid-template-columns: repeat(3, minmax(180px,1fr)); gap:10px }
+.toggle{ display:flex; align-items:center; gap:10px; border:1px solid var(--panel-border); background:#181825; padding:8px 10px; border-radius:10px }
+.toggle .lamp{ width:10px; height:10px; border-radius:999px; background:#333; box-shadow:0 0 0 0 transparent; }
+.toggle.on .lamp{ background:var(--accent); box-shadow:0 0 12px 2px color-mix(in oklab, var(--accent) 65%, transparent) }
+.toggle label{ font-family:var(--hfont); font-size:12px; letter-spacing:.08em }
+.small{ font-size:12px; margin-top:8px }

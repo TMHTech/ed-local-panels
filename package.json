@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Local Ship Panels (Nav/Tac/Eng) for Elite Dangerous \u2014 Node WS server + browser panels",
+  "description": "Local Ship Panels (Nav/Tac/Eng/HUD) for Elite Dangerous — Node WS server + browser panels",
   "scripts": {
     "start": "node local-panels/server/index.js",
     "dev": "node local-panels/server/index.js"

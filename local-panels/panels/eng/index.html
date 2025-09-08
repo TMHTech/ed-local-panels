@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ED Panel — Engineering</title>
   <link rel="stylesheet" href="../shared/theme.css">
+  <script type="module">
+    import { applyTheme } from '../shared/theme.js';
+    await applyTheme();
+  </script>
 </head>
 <body>
   <div class="card">
@@ -34,13 +38,8 @@
       if (typeof s.fuel === 'number') state.textContent = `Fuel: ${s.fuel.toFixed(1)} t`;
     });
 
-    ws.on('ShieldState', x => {
-      shields.textContent = x.shieldsUp ? 'Up' : 'Down';
-    });
-
-    ws.on('UnderAttack', x => {
-      state.innerHTML = '<span class="accent">Under Attack!</span>';
-    });
+    ws.on('ShieldState', x => { shields.textContent = x.shieldsUp ? 'Up' : 'Down'; });
+    ws.on('UnderAttack', () => { state.innerHTML = '<span class="accent">Under Attack!</span>'; });
   </script>
 </body>
 </html>

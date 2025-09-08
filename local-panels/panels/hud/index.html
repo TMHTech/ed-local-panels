@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ED Panels — HUD (True)</title>
+  <link rel="stylesheet" href="../shared/theme.css" />
+  <link rel="stylesheet" href="./hud.css" />
+  <script type="module">
+    import { applyTheme, injectFonts } from '../shared/theme.js';
+    const res = await fetch('/theme'); const t = await res.json(); injectFonts(t); await applyTheme();
+    document.body.dataset.mode = (t.mode === 'analysis' ? 'analysis' : 'combat');  // affects brackets
+  </script>
+</head>
+<body class="hud-true">
+  <!-- Top bars: COMMS / INFO -->
+  <div class="hud-top">
+    <div class="comms">COMMS</div>
+    <div class="info">INFO</div>
+  </div>
+
+  <!-- Mode brackets (curved for Combat / straight for Analysis) -->
+  <div class="brackets left"></div>
+  <div class="brackets right"></div>
+
+  <!-- LEFT PANEL (nav/contacts/target list) -->
+  <aside class="panel left">
+    <div class="tabs">
+      <span class="tab active">NAVIGATION</span>
+      <span class="tab">TRANSACTIONS</span>
+      <span class="tab">CONTACTS</span>
+    </div>
+    <div class="panel-body">
+      <div class="kv"><label>LOCATION</label><span id="left-location">—</span></div>
+      <div class="list" id="left-list">
+        <!-- populated from events: system bodies / route etc.  -->
+        <div class="row sel"><span class="bullet"></span><span>—</span><span class="dist"></span></div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn small">GALAXY MAP</button>
+        <button class="btn small">SYSTEM MAP</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL (status/modules/fire groups) -->
+  <aside class="panel right">
+    <div class="tabs">
+      <span class="tab active">STATUS</span>
+      <span class="tab">MODULES</span>
+      <span class="tab">FIRE GROUPS</span>
+      <span class="tab">CARGO</span>
+      <span class="tab">FUNCTIONS</span>
+    </div>
+    <div class="panel-body two-col">
+      <div class="kv"><label>CMDR</label><span id="cmdr">—</span></div>
+      <div class="kv"><label>SHIP</label><span id="ship">—</span></div>
+      <div class="kv"><label>BALANCE</label><span id="cr">—</span></div>
+      <div class="kv"><label>RANKS</label><span class="small">Combat / Trade / Explorer</span></div>
+    </div>
+  </aside>
+
+  <!-- CENTER HUD -->
+  <main class="center">
+    <!-- Target block (top-left of center) -->
+    <section class="target-block">
+      <div class="kv tight">
+        <label>Target</label><span id="t-name">—</span>
+      </div>
+      <div class="kv tight">
+        <label>Vessel</label><span id="t-ship">—</span>
+      </div>
+      <div class="kv tight">
+        <label>Status</label><span id="t-status">—</span>
+      </div>
+    </section>
+
+    <!-- Scanner / reticle -->
+    <section class="scanner">
+      <div class="rings">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="ticks"></div>
+        <div class="sweep"></div>
+      </div>
+    </section>
+
+    <!-- Heat (left semicircle) -->
+    <section class="gauge heat" title="Heat">
+      <div class="arc"><div class="fill"></div></div>
+      <div class="readout"><span id="heat-val">—</span></div>
+    </section>
+
+    <!-- Speed (right semicircle) -->
+    <section class="gauge speed" title="Speed">
+      <div class="arc"><div class="fill blue-zone"></div><div class="throttle"></div></div>
+      <div class="readout"><span id="spd-val">—</span></div>
+    </section>
+
+    <!-- PIPs + Signature + Fuel stack (right block) -->
+    <section class="right-block">
+      <div class="pips">
+        <div class="row"><label>SYS</label><div class="bar" id="pip-sys"></div></div>
+        <div class="row"><label>ENG</label><div class="bar" id="pip-eng"></div></div>
+        <div class="row"><label>WEP</label><div class="bar" id="pip-wep"></div></div>
+      </div>
+      <div class="signature">
+        <label>Signature</label>
+        <div class="wave"><div class="trace"></div></div>
+      </div>
+      <div class="fuel">
+        <label>Fuel</label>
+        <div class="stack"><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span></div>
+        <div class="rate"><span id="fuel-amt">—</span></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./hud.js"></script>
+</body>
+</html>

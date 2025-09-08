@@ -1,0 +1,28 @@
+/* Uses your shared theme variables */
+.hud-left{ padding:10px; background:var(--bg); color:var(--text) }
+.tabs{ display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap }
+.tab{ font-family:var(--hfont); font-size:12px; padding:6px 10px; border:1px solid var(--panel-border); background:#181825; cursor:pointer }
+.tab.active{ border-color:var(--accent); box-shadow:0 0 8px color-mix(in oklab,var(--accent) 35%,transparent) }
+
+.pane{ display:none; border:1px solid var(--panel-border); background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.2)), var(--panel); padding:10px; border-radius:10px }
+.pane.show{ display:block }
+
+.kv.grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; margin-bottom:8px }
+.kv label{ font-size:11px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase }
+.kv span{ font-size:18px }
+
+.list{ display:grid; grid-template-columns: 1fr 160px; border-left:1px solid var(--panel-border); border-right:1px solid var(--panel-border) }
+.list.head{ background:#181825; color:var(--muted); border-top:1px solid var(--panel-border); padding:6px 8px }
+.list.body{ max-height:56vh; overflow:auto; border-bottom:1px solid var(--panel-border) }
+.row{ display:contents }
+.row > div{ padding:6px 8px; border-bottom:1px dashed var(--panel-border) }
+.row.sel > div{ background:linear-gradient(90deg, color-mix(in oklab, var(--accent) 18%, transparent), transparent) }
+.row.dim > div{ color:var(--muted) }
+.muted{ color:var(--muted); font-size:12px }
+
+/* Subtabs */
+.subtabs{ display:flex; gap:8px; margin:8px 0 }
+.subtab{ font-family:var(--hfont); font-size:12px; padding:4px 10px; border:1px solid var(--panel-border); background:#181825; cursor:pointer }
+.subtab.active{ border-color:var(--accent) }
+.subpane{ display:none }
+.subpane.show{ display:block }
