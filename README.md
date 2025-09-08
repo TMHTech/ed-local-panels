@@ -1,50 +1,56 @@
-# ED Local Ship Panels (starter)
+# ED Local Ship Panels
 
-Local, JS-first panels for your cockpit: a Node/Express server watches Elite Dangerous journals and broadcasts events over WebSocket; panels are static HTML/JS pages that subscribe and render live HUD data.
+Local, JS-first ship panels for your Elite Dangerous cockpit.  
+A lightweight Node/Express server watches Elite Dangerous journal files and broadcasts events over WebSocket.  
+Panels are static HTML/JS pages that subscribe to those events and render live HUD data.
 
-## Quick start
-1. Copy the `local-panels/` folder into the root of your repo (e.g., `EliteDangerousCockpit/`).
-2. From the repo root, run:
+---
+
+## 🚀 Quick Start
+
+1. Copy the `local-panels/` folder into your project root (e.g. `EliteDangerousCockpit/`).
+
+2. From the project root, install dependencies and copy the config:
    ```bash
    npm install
    cp local-panels/server/config.example.json local-panels/server/config.json
-   # On Windows (PowerShell): Copy-Item local-panels/server/config.example.json local-panels/server/config.json
    ```
-3. Edit `local-panels/server/config.json` to set the **journalsPath** if auto-detect fails.
-4. Start:
+   On Windows (PowerShell):
+   ```powershell
+   Copy-Item local-panels/server/config.example.json local-panels/server/config.json
+   ```
+
+3. Edit `local-panels/server/config.json` and set **journalsPath** if auto-detect fails.
+
+4. Start the server:
    ```bash
    npm run start
-   # Server at http://localhost:8787 ; open panels:
-   #   - http://localhost:8787/panels/nav/
-   #   - http://localhost:8787/panels/eng/
    ```
+   Server runs at: [http://localhost:8787](http://localhost:8787)
 
-## What it includes
-- **Express** static server (serves `local-panels/panels/*`)
-- **Socket.IO** broadcast
-- **Watchers** for:
-  - `Journal.*.log` (JSON-per-line) → emits selected events
-  - `Status.json` → emits ship status snapshot
-- **Two panels**: `nav` (system & route), `eng` (heat/shields/hull)
+   Panels available:
+   - [Left Panel](http://localhost:8787/panels/nav/) → system & route info  
+   - [Right Panel](http://localhost:8787/panels/eng/) → heat / shields / hull
 
-## Git add (example)
-```bash
-git checkout -b feature/local-panels
-git add local-panels package.json
-git commit -m "feat(panels): add Local Ship Panels starter (Node WS + Nav/Eng panels)"
-git push -u origin feature/local-panels
-# Open a PR on GitHub
-```
+---
 
-## Notes
-- Default journal location (Windows): `%USERPROFILE%\Saved Games\Frontier Developments\Elite Dangerous`
-- The watcher picks the **latest** `Journal.*.log` and tails new lines.
-- `Status.json` updates frequently; we debounce to avoid thrash.
-- Everything is local-only; no cloud or OBS required.
+## 📦 Features
 
+- **Express** static server – serves `local-panels/panels/*`
+- **Socket.IO** – real-time broadcast of game events
+- **Watchers**:
+  - `Journal.*.log` → emits selected events
+  - `Status.json` → emits ship status snapshots
+- **Panels included**:
+  - **Left Panel** – navigation & route  
+  - **Right Panel** – engineering (heat, shields, hull)
 
-## New in v2
-- **Tactical panel** (`/panels/tac/`) showing live `ShipTargeted` intel (+ macro button).
-- **Macro endpoint** `POST /macro/:name` (commands mapped in `local-panels/server/config.json` → `macros`).
-- **Spaceship HUD theme** with CSS variables + runtime `/theme` route so you can change **colors** and **fonts** without editing CSS.
-- Example **PowerShell macro scripts** in `/scripts` (replace with your AHK/Gremlin callouts).
+---
+
+## 📒 Notes
+
+- Default journal path (Windows):  
+  `%USERPROFILE%\Saved Games\Frontier Developments\Elite Dangerous`
+- The watcher tails the **latest** `Journal.*.log` automatically.
+- `Status.json` updates are debounced to reduce spam.
+- Runs entirely **local-only** — no cloud services or overlays required.
