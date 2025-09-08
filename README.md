@@ -1,5 +1,9 @@
 # ED Local Ship Panels
 
+> ⚠️ **Work in Progress**  
+> This project is an **early version (v1)**. Features may change, break, or be incomplete.  
+> Contributions and feedback are welcome while development continues.
+
 Local, JS-first ship panels for your Elite Dangerous cockpit.  
 A lightweight Node/Express server watches Elite Dangerous journal files and broadcasts events over WebSocket.  
 Panels are static HTML/JS pages that subscribe to those events and render live HUD data.
