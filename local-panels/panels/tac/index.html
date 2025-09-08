@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ED Panel — Tactical</title>
+  <link rel="stylesheet" href="../shared/theme.css">
+  <script type="module">
+    import { applyTheme } from '../shared/theme.js';
+    await applyTheme();
+  </script>
+</head>
+<body>
+  <div class="card">
+    <h2>Tactical <span class="badge">Target Intel</span></h2>
+    <div class="row">
+      <div class="kv"><label>Target</label><span id="tName">—</span></div>
+      <div class="kv"><label>Vessel</label><span id="tShip">—</span></div>
+      <div class="kv"><label>Status</label><span id="tStatus">—</span></div>
+    </div>
+    <div class="hr"></div>
+    <div class="row">
+      <div class="kv"><label>Faction</label><span id="tFaction">—</span></div>
+      <div class="kv"><label>Power</label><span id="tPower">—</span></div>
+      <div class="kv"><label>Subsystem</label><span id="tSub">—</span></div>
+    </div>
+    <div class="reticle"></div>
+    <div class="row">
+      <button id="combatBtn">⚡ Engage Protocol</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { ws } from '../shared/ws.js';
+
+    const tName = document.getElementById('tName');
+    const tShip = document.getElementById('tShip');
+    const tStatus = document.getElementById('tStatus');
+    const tFaction = document.getElementById('tFaction');
+    const tPower = document.getElementById('tPower');
+    const tSub = document.getElementById('tSub');
+    const btn = document.getElementById('combatBtn');
+
+    ws.on('Target', x => {
+      if (!x) return;
+      tName.textContent = x.name || '—';
+      tShip.textContent = x.ship || '—';
+      let status = [];
+      if (x.legalStatus) status.push(x.legalStatus);
+      if (x.wanted) status.push('WANTED');
+      if (typeof x.bounty === 'number') status.push((x.bounty).toLocaleString() + ' CR');
+      tStatus.innerHTML = status.length ? '<span class="accent">' + status.join(' • ') + '</span>' : '—';
+      tFaction.textContent = x.faction || '—';
+      tPower.textContent = x.power || '—';
+      tSub.textContent = x.subsystem || '—';
+    });
+
+    // Macro trigger
+    btn.addEventListener('click', async () => {
+      try {
+        const res = await fetch('/macro/combat_entry', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({}) });
+        if (res.ok) btn.textContent = '✅ Protocol Sent'; else btn.textContent = '❌ Error';
+        setTimeout(()=> btn.textContent = '⚡ Engage Protocol', 1200);
+      } catch { btn.textContent = '❌ Error'; setTimeout(()=> btn.textContent='⚡ Engage Protocol', 1200); }
+    });
+  </script>
+</body>
+</html>

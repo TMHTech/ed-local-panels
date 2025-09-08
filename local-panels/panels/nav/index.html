@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ED Panel — Navigation</title>
+  <link rel="stylesheet" href="../shared/theme.css">
+</head>
+<body>
+  <div class="card">
+    <h2>Navigation <span class="badge">Live</span></h2>
+    <div class="row">
+      <div class="kv"><label>System</label><span id="sys">—</span></div>
+      <div class="kv"><label>Star Class</label><span id="star">—</span></div>
+      <div class="kv"><label>Fuel Level</label><span id="fuel">—</span></div>
+    </div>
+    <div class="row">
+      <div class="kv"><label>Status</label><span id="status">—</span></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { ws } from '../shared/ws.js';
+    const sys = document.getElementById('sys');
+    const star = document.getElementById('star');
+    const fuel = document.getElementById('fuel');
+    const status = document.getElementById('status');
+
+    ws.on('connect', ()=> status.textContent = 'Connected');
+    ws.on('disconnect', ()=> status.textContent = 'Disconnected');
+
+    ws.on('FSDJump', ({ systemName, starClass, fuelLevel }) => {
+      sys.textContent = systemName ?? '—';
+      star.textContent = starClass ?? '—';
+      fuel.textContent = (fuelLevel !== undefined && fuelLevel !== null) ? fuelLevel.toFixed(1)+' t' : '—';
+      status.innerHTML = '<span class="accent">Arrived</span>';
+    });
+
+    ws.on('StartJump', ({ jumpType, to }) => {
+      status.textContent = `Jumping (${jumpType || 'unknown'}) → ${to || '—'}`;
+    });
+
+    ws.on('Status', (s) => {
+      if (s && s.fuel != null) fuel.textContent = s.fuel.toFixed(1) + ' t';
+    });
+  </script>
+</body>
+</html>

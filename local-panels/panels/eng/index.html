@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ED Panel — Engineering</title>
+  <link rel="stylesheet" href="../shared/theme.css">
+</head>
+<body>
+  <div class="card">
+    <h2>Engineering <span class="badge">Cecil</span></h2>
+    <div class="row">
+      <div class="kv"><label>Heat</label><span id="heat">—</span></div>
+      <div class="kv"><label>PIPs</label><span id="pips">—</span></div>
+      <div class="kv"><label>Shields</label><span id="shields">—</span></div>
+    </div>
+    <div class="row">
+      <div class="kv"><label>State</label><span id="state">—</span></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { ws } from '../shared/ws.js';
+    const heat = document.getElementById('heat');
+    const pips = document.getElementById('pips');
+    const shields = document.getElementById('shields');
+    const state = document.getElementById('state');
+
+    ws.on('Status', s => {
+      const sys = s?.pips?.sys ?? '?';
+      const eng = s?.pips?.eng ?? '?';
+      const wep = s?.pips?.wep ?? '?';
+      pips.textContent = `${sys}/${eng}/${wep}`;
+      if (typeof s.fuel === 'number') state.textContent = `Fuel: ${s.fuel.toFixed(1)} t`;
+    });
+
+    ws.on('ShieldState', x => {
+      shields.textContent = x.shieldsUp ? 'Up' : 'Down';
+    });
+
+    ws.on('UnderAttack', x => {
+      state.innerHTML = '<span class="accent">Under Attack!</span>';
+    });
+  </script>
+</body>
+</html>
