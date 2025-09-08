@@ -1,0 +1,28 @@
+{
+  "port": 8787,
+  "journalsPath": "C:/Users/WWM/Saved Games/Frontier Developments/Elite Dangerous",
+  "statusJson": "C:/Users/WWM/Saved Games/Frontier Developments/Elite Dangerous/Status.json",
+  "theme": {
+    "accent": "#B01515",
+    "bg": "#0a0a0f",
+    "panel": "#111119",
+    "panelBorder": "#26263a",
+    "text": "#e8e8f0",
+    "muted": "#9aa",
+    "fontFamily": "Segoe UI, Roboto, Orbitron, Arial, Helvetica, sans-serif",
+    "headingFontFamily": "Russo One, Orbitron, Segoe UI, Roboto, Arial, Helvetica, sans-serif",
+    "scanlines": 0.06,
+    "glow": 0.5
+  },
+  "macros": {
+    "dock": {
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\macro_dock.ps1"
+    },
+    "combat_entry": {
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\macro_combat_entry.ps1"
+    },
+    "leds_alert": {
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\macro_leds_alert.ps1"
+    }
+  }
+}
