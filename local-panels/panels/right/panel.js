@@ -59,10 +59,11 @@ ws.on('Modules', ({items}) => {
 // FIRE GROUPS (placeholder — shows active group from Status.FireGroup)
 const fgList = document.getElementById('fg-list');
 ws.on('Status', s => {
-  if (typeof s?.FireGroup === 'number' || typeof s?.fireGroup === 'number') {
-    fgList.innerHTML='';
-    addRow(fgList, ['Active Group', (s.fireGroup ?? s.FireGroup) + 1, '—']);
+  if (s?.balance ?? s?.Balance) {
+    const val = (s.balance ?? s.Balance);
+    document.getElementById('cr').textContent = val.toLocaleString() + ' CR';
   }
+  if (s?.ship) document.getElementById('ship').textContent = s.ship;
 });
 
 // CARGO
