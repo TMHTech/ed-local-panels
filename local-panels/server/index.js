@@ -53,7 +53,7 @@ app.post('/macro/:name', (req, res) => {
   child.once('exit', code => io.emit('Macro', { name, code }));
   res.json({ ok: true, started: true, name });
 });
-
+app.get('/debug/cache', (_req, res) => res.json(bus.getSnapshot()));
 // broadcaster (single place)
 const bus = createEventBus(io);
 const emit = (type, payload) => bus.emit(type, payload);
